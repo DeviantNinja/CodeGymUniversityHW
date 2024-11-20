@@ -10,11 +10,9 @@ public class Homework {
      * object creation and test cases are located in the converter test method.
      */
     public static void main(String[] args) {
-        System.out.println(mostUsedLetter("aaabbbccc"));
-        System.out.println(isAnagram("apple","ppale"));
-        System.out.println(compressString("bananaaa"));
+//        System.out.println(isAnagram("apple","ppale"));
+//        System.out.println(compressString("bananaaa"));
 
-        converterTests();
     }
 
     private static void converterTests() {
@@ -51,35 +49,6 @@ public class Homework {
 //        System.out.println(binary.toHex("1011001111011"));
     }
 
-    /**
-     * 1. Find and return the most common letter in a given string.
-     * calculates the most used letter, if multiple letters
-     * have the same quantity will return the first alphabetically
-     */
-    public static char mostUsedLetter(String string) {
-        char[] stringArray = string.toLowerCase().toCharArray();
-        char tempChar;
-        char mostUsed;
-        int count = 1;
-        int highestCount = 0;
-
-        Arrays.sort(stringArray);
-        mostUsed = tempChar = stringArray[0];
-
-        for (int i = 1; i < stringArray.length ; i++) {
-            if(tempChar == stringArray[i]) {
-                count++;
-            } else {
-                tempChar = stringArray[i];
-                count = 1;
-            }
-            if(count > highestCount) {
-                highestCount = count;
-                mostUsed = tempChar;
-            }
-        }
-        return mostUsed;
-    }
 
     /**
      *  2. Check if 2 strings are anagrams of each other (below - elbow, end - ned, apple - ppale)
