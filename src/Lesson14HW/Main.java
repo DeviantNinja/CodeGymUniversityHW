@@ -11,13 +11,15 @@ public class Main {
                 array.add("Rue");
             }
         }
+        System.out.println(array.toString());
         array.remove(0);
         array.remove(1);
         array.remove(2);
+        System.out.println(array.toString());
         array.add("Michael");
         array.add("Michael");
         array.add("Michael");
-
+        System.out.println(array.toString());
 
 
     }
