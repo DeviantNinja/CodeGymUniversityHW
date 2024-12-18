@@ -1,4 +1,4 @@
-package Lesson15HW;
+package Lesson15HWand16HW;
 
 public class MyLinkedList<T> {
     private int size;
@@ -61,6 +61,44 @@ public class MyLinkedList<T> {
 
     public int size(){
         return size;
+    }
+
+    public Node<T> getNthFromLast(int nthValue) {
+        if(nthValue <= 0) throw new IndexOutOfBoundsException();
+        Node<T> node = head;
+        int sizeCount = 0;
+        int count = 0;
+
+        while (node.next != null) {
+            sizeCount++;
+            node = node.next;
+        }
+
+        node = head;
+        while (count <= sizeCount - nthValue ){
+            node = node.next;
+            count++;
+        }
+
+        return node;
+    }
+
+    public Node<T> getNthFromLastOnePass(int nthValue) {
+        if(nthValue <= 0) throw new IndexOutOfBoundsException();
+        Node<T> node = head;
+        Node<T> nthNode = head;
+        int count = 0;
+
+        while(node.next != null) {
+            node = node.next;
+
+            if(count >= nthValue - 1) {
+                nthNode = nthNode.next;
+            }
+            count++;
+        }
+
+        return nthNode;
     }
 
 

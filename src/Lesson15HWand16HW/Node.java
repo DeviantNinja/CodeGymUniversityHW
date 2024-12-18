@@ -1,4 +1,4 @@
-package Lesson15HW;
+package Lesson15HWand16HW;
 
 public class Node<T> {
     T data;
