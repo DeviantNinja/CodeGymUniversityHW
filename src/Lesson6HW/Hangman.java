@@ -50,8 +50,7 @@ public class Hangman {
             if(!hiddenWord.toLowerCase().contains(guess.toLowerCase())) {
                 guessCount++;
             }
-        } //TODO banana
-
+        }
         System.out.println("Game Over!");
     }
 }
