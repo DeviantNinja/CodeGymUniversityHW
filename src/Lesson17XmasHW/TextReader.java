@@ -12,14 +12,14 @@ public class TextReader {
     }
 
     public ArrayList<String> getFormatedWords() {
-        String DEFAULT_TEXT = "A 1Quick Brown2 !Fox ,  Jumped@ 123Over T7he Lazy Dog";
-        return getFormatedWords(DEFAULT_TEXT);
+        String defaultText = "A 1Quick Brown2 !Fox ,  Jumped@ 123Over T7he Lazy Dog";
+        return getFormatedWords(defaultText);
     }
 
     public ArrayList<String> getFormatedWords(String string) {
         ArrayList<String> wordList = new ArrayList<>();
-        for(String word : formatText(string) ) {
-            if(!word.isEmpty() && !word.equals(" ")){
+        for (String word : formatText(string)) {
+            if (!word.isEmpty() && !word.equals(" ")) {
                 wordList.add(word);
             }
         }

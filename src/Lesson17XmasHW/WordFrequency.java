@@ -5,7 +5,7 @@ import java.util.*;
 public class WordFrequency {
     HashMap<String, Integer> wordFrequency;
 
-    public WordFrequency(){
+    public WordFrequency() {
         wordFrequency = new HashMap<>();
     }
 
@@ -15,7 +15,7 @@ public class WordFrequency {
     }
 
     public void update(String word) {
-        if(wordFrequency.containsKey(word)) {
+        if (wordFrequency.containsKey(word)) {
             wordFrequency.replace(word, wordFrequency.get(word) + 1);
         } else {
             wordFrequency.put(word, 1);
@@ -24,7 +24,7 @@ public class WordFrequency {
 
     public ArrayList<String> mostUsedWords(int numberOfWords) {
         ArrayList<String> wordList = new ArrayList<>();
-        int count =0;
+        int count = 0;
         int requiredWords;
         List<Map.Entry<String, Integer>> entryList = new ArrayList<>(wordFrequency.entrySet());
         entryList.sort(new Comparator<>() {
@@ -34,10 +34,10 @@ public class WordFrequency {
             }
         });
 
-        requiredWords = Math.min(numberOfWords,entryList.size());
+        requiredWords = Math.min(numberOfWords, entryList.size());
 
-        for(Map.Entry<String, Integer> entry : entryList) {
-            if(count++ < requiredWords){
+        for (Map.Entry<String, Integer> entry : entryList) {
+            if (count++ < requiredWords) {
                 wordList.add(entry.getKey());
             }
         }
