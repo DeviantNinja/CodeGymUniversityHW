@@ -1,32 +1,39 @@
 package Lesson17XmasHW;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class WordSuggestion {
-    private HashMap<String,WordFrequency> wordList;
+    HashMap<String,WordFrequency> wordList;
 
     public WordSuggestion() {
         wordList = new HashMap<>();
-        defaultList();
     }
 
-    public void checkWord(String word) {
-        if(wordList.containsKey(word)) {
-            getMostUsedWords(word);
+    public void update(String word, String previousWord){
+
+        word = word.toLowerCase();
+        previousWord = previousWord.toLowerCase();
+
+        if(previousWord.isEmpty()) {
+            wordList.put(word, new WordFrequency());
         } else {
-            wordList.put(word,new WordFrequency());
+            if(wordList.containsKey(previousWord)) {
+                wordList.get(previousWord).update(word);
+            } else {
+                wordList.put(previousWord, new WordFrequency(word));
+            }
         }
     }
 
-
-    private void defaultList() {
-        wordList.put("Michael", new WordFrequency());
-        wordList.put("John", new WordFrequency());
+    public ArrayList<String> mostUsedWords(String word, int numberOfWords) {
+        return wordList.get(word).mostUsedWords(numberOfWords);
     }
 
-    public void getMostUsedWords(String word) {
-        for(String aWord : wordList.get(word).getMostUsedWords()) {
-            System.out.print(aWord + " ");
-        }
+
+    @Override
+    public String toString() {
+        return "WordSuggestion{" +
+                "wordList=" + wordList +
+                '}';
     }
 }

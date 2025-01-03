@@ -1,13 +1,23 @@
 package Lesson17XmasHW;
 
-import org.w3c.dom.Text;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        TextReader test = new TextReader();
-        test.blah();
+        WordSuggestion test = new WordSuggestion();
+        test.update("there", "Hello");
+        test.update("World", "hello");
+        test.update("World", "hello");
+        test.update("World", "hello");
+        test.update("Darcy", "Hello");
+        test.update("banana", "Hello");
+        test.update("banana", "hello");
+        test.update("World", "hello");
+        test.update("james", "hello");
+        test.update("apple", "Hello");
+        System.out.println(test);
+
+        System.out.println(Arrays.toString(test.mostUsedWords("hello", 100).toArray()));
+
     }
 }

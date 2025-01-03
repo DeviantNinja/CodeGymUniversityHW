@@ -1,59 +1,54 @@
 package Lesson17XmasHW;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class WordFrequency {
-    private final int DEFAULT_NUMBER_OF_WORDS = 3;
-    private TreeMap<String,Integer>  wordUsage = new TreeMap<>();
+    HashMap<String, Integer> wordFrequency;
 
-    public WordFrequency() {
+    public WordFrequency(){
+        wordFrequency = new HashMap<>();
     }
 
-    public String[] getMostUsedWords(){
-        return getMostUsedWords(DEFAULT_NUMBER_OF_WORDS);
+    public WordFrequency(String word) {
+        wordFrequency = new HashMap<>();
+        update(word);
     }
 
-    public String[] getMostUsedWords(int numberOfWords) {
-        //TODO impliment code for words to be returend.
-        return new String[] {"test1","test2","test3"};
-    }
-
-
-
-    /**
-     * Add word to list with default value of 1
-     * @param word String containing word to be added
-     */
-    private void AddWord(String word) {
-        wordUsage.put(word, 1);
-    }
-
-    /**
-     * checks if a word is in the list, if the word is not
-     * in the list will call the add word method to add word
-     * to list
-     * @param word String containing word to be added
-     */
-    public void updateWord(String word) {
-        if(wordUsage.containsKey(word)) {
-            wordUsage.replace(word, wordUsage.get(word)+1);
+    public void update(String word) {
+        if(wordFrequency.containsKey(word)) {
+            wordFrequency.replace(word, wordFrequency.get(word) + 1);
         } else {
-            AddWord(word);
+            wordFrequency.put(word, 1);
         }
     }
 
-    /***
-     * Loads Default list of words static for now would like
-     * to add a document import
-     */
+    public ArrayList<String> mostUsedWords(int numberOfWords) {
+        ArrayList<String> wordList = new ArrayList<>();
+        int count =0;
+        int requiredWords;
+        List<Map.Entry<String, Integer>> entryList = new ArrayList<>(wordFrequency.entrySet());
+        entryList.sort(new Comparator<>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+
+        requiredWords = Math.min(numberOfWords,entryList.size());
+
+        for(Map.Entry<String, Integer> entry : entryList) {
+            if(count++ < requiredWords){
+                wordList.add(entry.getKey());
+            }
+        }
+
+        return wordList;
+    }
 
     @Override
     public String toString() {
         return "WordFrequency{" +
-                "wordUsage=" + wordUsage +
+                "wordFrequency=" + wordFrequency +
                 '}';
     }
 }
