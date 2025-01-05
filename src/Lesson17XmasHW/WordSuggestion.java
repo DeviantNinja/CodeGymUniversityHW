@@ -7,6 +7,7 @@ public class WordSuggestion {
 
     public WordSuggestion() {
         wordList = new HashMap<>();
+        loadDictionary();
     }
 
     public WordSuggestion(String dictionaryText){
