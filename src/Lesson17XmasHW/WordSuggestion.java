@@ -34,8 +34,22 @@ public class WordSuggestion {
         }
     }
 
+    /*
+        Will return an ArrayList with up to the maximum number words requested.
+        if the word list has less than the maximum then all words will be returned.
+        if the list is null then an empty array will be returned.
+     */
     public ArrayList<String> mostUsedWords(String word, int numberOfWords) {
+        WordFrequency wordFreq = wordList.get(word.toLowerCase());
+        if(wordFreq == null) {
+            return new ArrayList<>();
+        }
         return wordList.get(word).mostUsedWords(numberOfWords);
+    }
+
+    //returns default number of 3 words
+    public ArrayList<String> mostUsedWords(String word) {
+        return mostUsedWords(word, 3);
     }
 
     private void loadDictionary() {
@@ -59,7 +73,6 @@ public class WordSuggestion {
             }
             index++;
         }
-
     }
 
 
