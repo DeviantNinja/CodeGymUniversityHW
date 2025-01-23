@@ -18,7 +18,7 @@ public class Main {
     }
 
     public static boolean checkBrackets(String input){
-        if (input.length() < 1 || input.length() % 2 != 0) return false;
+        if (input.isEmpty() || input.length() % 2 != 0) return false;
         Stack<Character> stack = new Stack<>();
         Map<Character,Character> brackets = new HashMap<>();
         brackets.put('}','{');
@@ -26,7 +26,7 @@ public class Main {
         brackets.put(')','(');
 
         for(char c : input.toCharArray()) {
-            if(brackets.values().contains(c)) {
+            if(brackets.containsValue(c)) {
                 stack.push(c);
             } else {
                 if(stack.empty()) return false;
