@@ -11,10 +11,34 @@ public class Main {
         System.out.println(checkBrackets("((({}{[]})))"));
         System.out.println(checkBrackets(")("));
         System.out.println(checkBrackets(""));
+
+
+        System.out.println(removePairsOfAdjacentLetters("afghhgfdds"));
+        System.out.println(removePairsOfAdjacentLetters("xdaabbccdy"));
     }
 
     public static String removePairsOfAdjacentLetters(String string){
-        return "";
+        Stack<Character> stack = new Stack<>();
+        String modifiedString = "";
+
+        for(char c : string.toCharArray()){
+            if(stack.isEmpty()) {
+                stack.push(c);
+            } else {
+                if(stack.peek() == c){
+                    stack.pop();
+                } else {
+                    stack.push(c);
+                }
+            }
+        }
+
+        for(char c : stack){
+            modifiedString += c;
+        }
+
+
+        return modifiedString;
     }
 
     public static boolean checkBrackets(String input){
