@@ -6,15 +6,15 @@ import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(checkBrackets("()()()[]{{[]}}"));
-        System.out.println(checkBrackets("((])[)"));
-        System.out.println(checkBrackets("((({}{[]})))"));
-        System.out.println(checkBrackets(")("));
-        System.out.println(checkBrackets(""));
+        System.out.println(checkBrackets("()()()[]{{[]}}")); //true
+        System.out.println(checkBrackets("((])[)")); //false
+        System.out.println(checkBrackets("((({}{[]})))")); //true
+        System.out.println(checkBrackets(")(")); //false
+        System.out.println(checkBrackets("")); //false
 
 
-        System.out.println(removePairsOfAdjacentLetters("afghhgfdds"));
-        System.out.println(removePairsOfAdjacentLetters("xdaabbccdy"));
+        System.out.println(removePairsOfAdjacentLetters("afghhgfdds")); //as
+        System.out.println(removePairsOfAdjacentLetters("xdaabbccdy")); //xy
     }
 
     public static String removePairsOfAdjacentLetters(String string){

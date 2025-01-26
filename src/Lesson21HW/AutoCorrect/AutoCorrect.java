@@ -1,4 +1,4 @@
-package AutoCorrect;
+package Lesson21HW.AutoCorrect;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,17 +6,28 @@ import java.util.*;
 
 public class AutoCorrect {
     private final Map<Integer,Map<String,Integer>> dictionary;
+    private final int DEFAULT_RANGE = 1;
 
-    public AutoCorrect(String string) {
-        dictionary = new HashMap<>();
-        populateDictionary();
-        getDistance(string);
+    public AutoCorrect() {
+        this(new File("src//Lesson21HW//AutoCorrect//DictionaryList.csv"));
     }
 
-    private void populateDictionary() {
+    public AutoCorrect(File dictionaryPath) {
+        dictionary = new HashMap<>();
+        populateDictionary(dictionaryPath);
+    }
+
+    public List<String> checkWord(String word, int noOfWords) {
+        if(isSpeltCorrectly(word)){
+            return new ArrayList<>();
+        }
+        return wordSuggestions(word, noOfWords);
+    }
+
+    private void populateDictionary(File dictionaryPath) {
         Scanner sc;
         try {
-            sc = new Scanner(new File("src\\AutoCorrect\\text2.csv"));
+            sc = new Scanner(dictionaryPath);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -25,7 +36,6 @@ public class AutoCorrect {
             String word = line[0].toLowerCase();
             int wordLength = line[0].length();
             int wordFrequency = Integer.parseInt(line[1]);
-
 
             if(dictionary.containsKey(wordLength)) {
                 dictionary.get(wordLength).put(word,wordFrequency);
@@ -36,6 +46,7 @@ public class AutoCorrect {
         }
     }
 
+
     private boolean isSpeltCorrectly(String word){
         return dictionary.get(word.length()).containsKey(word);
     }
@@ -45,10 +56,9 @@ public class AutoCorrect {
         specified range Cat,1 would return all words that are 2-4 characters
         in length.
      */
-    public Map<String,Integer> getListOfWords(String word, int range) {
-        int min = word.length() - range <= 1 ? 1 : word.length() - range;
+    private Map<String,Integer> getListOfWords(String word, int range) {
+        int min = Math.max(word.length() - range, DEFAULT_RANGE);
         int max = word.length() + range;
-        System.out.println("min: " + min + " Max: " + max);
         Map<String,Integer> wordList = new HashMap<>();
 
         for (int i = min; i <= max ; i++) {
@@ -59,25 +69,16 @@ public class AutoCorrect {
         return wordList;
     }
 
-    public ArrayList<String> checkWord(String word) {
-        if(isSpeltCorrectly(word)){
-            return new ArrayList<>();
-        }
-        //check if letters are jumbled
-        //sets cross section?
-        //check distance
-
-
-
-        //generate list of words with thier distance pick number of words with smallest word and largest frequncy.
-
-        return null;
-    }
-
-    private void getDistance(String word){
-        Map<String, Integer> wordList = getListOfWords(word,1);
+    /*
+        Takes the word to be checked and the number of words to be returned.
+        returns a List of words that require the fewest number of changes smallest to largest.
+     */
+    private List<String> wordSuggestions(String word, int noOfWords){
+        Map<String, Integer> wordList = getListOfWords(word,2);
         Map<Integer,Map<String,Integer>> wordsByDistance = new HashMap<>();
+        List<String> words = new ArrayList<>();
 
+        //creates a Map of words grouped by Levenshtein distance
         for(String aWord : wordList.keySet()) {
             int distance = levDistance(word,aWord);
             if(wordsByDistance.containsKey(distance)) {
@@ -87,24 +88,24 @@ public class AutoCorrect {
                 wordsByDistance.get(distance).put(aWord, wordList.get(aWord));
             }
         }
-        System.out.println(wordsByDistance);
+
+        //extracts a list of words smallest Levenshtein distance to largest
+        //upto the number of words requested.
+        for(Map.Entry<Integer,Map<String,Integer>> wordFreq : wordsByDistance.entrySet()) {
+            for(String w : wordFreq.getValue().keySet()){
+                if(words.size() != noOfWords) {
+                    words.add(w);
+                } else {
+                    return words;
+                }
+            }
+        }
+        return words;
     }
 
-//    private void getDistance(String word) {
-//        Map<String, Integer> wordList = getListOfWords(word,0);
-//        Map<Integer,String> newWordList = new TreeMap<>(Comparator.reverseOrder());
-//        for(String aWord : wordList.keySet()){
-//            int distance = levDistance(word,aWord);
-//            if(distance <= 2) {
-//                newWordList.put(wordList.get(aWord),aWord);
-//            }
-//        }
-//        System.out.println(newWordList);
-//
-//    }
-
-
-
+    //calculates the number of times a letter needs to be added, removed or changed.
+    //used to find the words with the samllesst number of changes.
+    //https://www.baeldung.com/cs/levenshtein-distance-computation
     private int levDistance(String word1, String word2) {
         int[][] matrix = new int[word1.length() + 1][word2.length() + 1];
         for (int i = 0; i <= word1.length(); i++) {
@@ -123,11 +124,6 @@ public class AutoCorrect {
         }
         return matrix[word1.length()][word2.length()];
     }
-
-    //TODO write method to loop through word list and calculate distance. and then compare shortest distances with highest frequencies
-    //TODO hmm need another list for frequencies/word lengths. consider tomorrow.
-
-
 }
 
 
