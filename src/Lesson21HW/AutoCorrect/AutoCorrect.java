@@ -90,7 +90,7 @@ public class AutoCorrect {
         }
 
         //extracts a list of words smallest Levenshtein distance to largest
-        //upto the number of words requested.
+        //up to the number of words requested.
         for(Map.Entry<Integer,Map<String,Integer>> wordFreq : wordsByDistance.entrySet()) {
             for(String w : wordFreq.getValue().keySet()){
                 if(words.size() != noOfWords) {
@@ -104,7 +104,7 @@ public class AutoCorrect {
     }
 
     //calculates the number of times a letter needs to be added, removed or changed.
-    //used to find the words with the samllesst number of changes.
+    //used to find the words with the smallest number of changes.
     //https://www.baeldung.com/cs/levenshtein-distance-computation
     private int levDistance(String word1, String word2) {
         int[][] matrix = new int[word1.length() + 1][word2.length() + 1];
